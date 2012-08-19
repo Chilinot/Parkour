@@ -20,7 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
 	
 	private DatabaseManager databasemanager;
-	private SignManager signmanager;
+//	private SignManager signmanager;
 	
 	public void onEnable() {
 		Config.load(this);
@@ -28,14 +28,14 @@ public class Main extends JavaPlugin {
 		this.getServer().getPluginManager().registerEvents(new ParkourListener(this), this);
 		
 		this.databasemanager = new DatabaseManager(this);
-		this.signmanager = new SignManager(this);
+//		this.signmanager = new SignManager(this);
 	}
 	
 	public DatabaseManager getDatabaseManager() {
 		return this.databasemanager;
 	}
 	
-	public SignManager getSignManager() {
-		return this.signmanager;
-	}
+//	public SignManager getSignManager() {
+//		return this.signmanager;
+//	}
 }
