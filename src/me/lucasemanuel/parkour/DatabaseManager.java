@@ -67,6 +67,29 @@ public class DatabaseManager {
 		}
 	}
 	
+	/*
+	 * Yes this should have its own thread! Fuck you, im lazy!
+	 */
+	public String[][] getLatestStats() {
+		
+		String[][] stats = new String[8][2];
+		
+		try {
+			ResultSet rs = this.connection.createStatement().executeQuery("SELECT * FROM " + this.tablename + " ORDER BY points DESC LIMIT 0,8");
+			
+			int j = 0;
+			while(rs.next() && j < 8) {
+				stats[j] = new String[] {rs.getString("playername"), "" + rs.getInt("points")};
+				j++;
+			}
+		}
+		catch(SQLException e) {
+			logger.severe("SQLException while getting leaderboard: " + e.getMessage());
+		}
+		
+		return stats;
+	}
+	
 	public void updateDatabase(String playername, int points) {
 		new UpdateDatabaseThread(this.connection, this.tablename, playername, points);
 	}
