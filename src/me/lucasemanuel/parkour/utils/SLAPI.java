@@ -3,7 +3,7 @@
  * @author Tomsik68
  */
 
-package me.lucasemanuel.parkour;
+package me.lucasemanuel.parkour.utils;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

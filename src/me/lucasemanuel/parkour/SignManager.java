@@ -19,6 +19,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
 
+import me.lucasemanuel.parkour.utils.ConsoleLogger;
+import me.lucasemanuel.parkour.utils.SLAPI;
+import me.lucasemanuel.parkour.utils.SerializedLocation;
+
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 

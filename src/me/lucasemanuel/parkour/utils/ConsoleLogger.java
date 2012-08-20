@@ -10,7 +10,7 @@
  *  Takes care of all the logging to the console.
  * 
  */
-package me.lucasemanuel.parkour;
+package me.lucasemanuel.parkour.utils;
 
 import java.util.HashSet;
 import java.util.Set;

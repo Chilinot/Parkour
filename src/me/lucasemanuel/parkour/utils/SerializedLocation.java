@@ -13,7 +13,7 @@
  * 
  */
 
-package me.lucasemanuel.parkour;
+package me.lucasemanuel.parkour.utils;
 
 import java.io.Serializable;
 

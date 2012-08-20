@@ -21,6 +21,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import me.lucasemanuel.parkour.utils.ConsoleLogger;
+
 public class DatabaseManager {
 	
 	private ConsoleLogger logger;

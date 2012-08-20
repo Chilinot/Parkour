@@ -15,6 +15,8 @@
 
 package me.lucasemanuel.parkour;
 
+import me.lucasemanuel.parkour.utils.ConsoleLogger;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -59,15 +61,15 @@ public class ParkourListener implements Listener {
 				
 				player.sendMessage(ChatColor.GREEN + "Grattis! Du fick " + ChatColor.LIGHT_PURPLE + points + ChatColor.GREEN + " poäng!");
 				
-//				this.plugin.getSignManager().updateSigns();
+				this.plugin.getSignManager().updateSigns();
 			}
-//			else if(this.plugin.getSignManager().signnames.contains(firstline)) {
-//				
-//				if(this.plugin.getSignManager().addSign(firstline, block.getLocation()))
-//					player.sendMessage(ChatColor.GREEN + "Skylten: " + firstline + " är nu registrerad!");
-//				else
-//					player.sendMessage(ChatColor.RED + "Skylten: " + firstline + " kunde inte registreras!");
-//			}
+			else if(this.plugin.getSignManager().signnames.contains(firstline)) {
+				
+				if(this.plugin.getSignManager().addSign(firstline, block.getLocation()))
+					player.sendMessage(ChatColor.GREEN + "Skylten: " + firstline + " är nu registrerad!");
+				else
+					player.sendMessage(ChatColor.RED + "Skylten: " + firstline + " kunde inte registreras!");
+			}
 		}
 	}
 }
