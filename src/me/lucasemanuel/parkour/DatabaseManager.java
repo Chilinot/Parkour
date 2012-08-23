@@ -34,8 +34,6 @@ public class DatabaseManager {
 	private final String username;
 	private final String password;
 	
-	private Connection connection;
-	
 	public DatabaseManager(Main instance) {
 		this.logger = new ConsoleLogger(instance, "DatabaseManager");
 		
@@ -46,27 +44,7 @@ public class DatabaseManager {
 		this.username = instance.getConfig().getString("username");
 		this.password = instance.getConfig().getString("password");
 		
-		this.connection = getConnection();
-		
-		if(this.connection == null) {
-			logger.severe("Could not connect to the datbase!");
-		}
-		
 		logger.debug("Initiated");
-	}
-	
-	private Connection getConnection() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			
-			String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
-			
-			return DriverManager.getConnection(url, username, password);
-		}
-		catch (SQLException | ClassNotFoundException e) {
-			logger.severe("Exception caught while connecting to database! :: " + e.getMessage());
-			return null;
-		}
 	}
 	
 	/*
@@ -76,8 +54,20 @@ public class DatabaseManager {
 		
 		String[][] stats = new String[8][2];
 		
+		Connection con = null;
+		
 		try {
-			ResultSet rs = this.connection.createStatement().executeQuery("SELECT * FROM " + this.tablename + " ORDER BY points DESC LIMIT 0,8");
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			con = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, username, password);
+		}
+		catch (SQLException | ClassNotFoundException e) {
+			logger.severe(e.getMessage());
+			return stats;
+		}
+		
+		try {
+			ResultSet rs = con.createStatement().executeQuery("SELECT * FROM " + this.tablename + " ORDER BY points DESC LIMIT 0,8");
 			
 			int j = 0;
 			while(rs.next() && j < 8) {
@@ -93,24 +83,34 @@ public class DatabaseManager {
 	}
 	
 	public void updateDatabase(String playername, int points) {
-		new UpdateDatabaseThread(this.connection, this.tablename, playername, points);
+		new UpdateDatabaseThread("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.username, this.password, this.tablename, playername, points);
 	}
 }
 
 class UpdateDatabaseThread extends Thread {
 	
-	private final Connection connection;
+	private Connection connection;
 	private final String tablename;
 	private final String playername;
 	private final int pointsToAdd;
 	
-	public UpdateDatabaseThread(Connection connection, String tablename, String playername, int points) {
-		this.connection = connection;
+	public UpdateDatabaseThread(String url, String username, String password, String tablename, String playername, int points) {
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			this.connection = DriverManager.getConnection(url, username, password);
+		}
+		catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		this.tablename = tablename;
 		this.playername = playername;
 		this.pointsToAdd = points;
 		
-		start();
+		if(this.connection != null)
+			start();
 	}
 	
 	public void run() {
