@@ -28,45 +28,43 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class ParkourListener implements Listener {
-	
+
 	private Main plugin;
 	private ConsoleLogger logger;
-	
+
 	public ParkourListener(Main instance) {
 		this.plugin = instance;
 		this.logger = new ConsoleLogger(instance, "EventListener");
-		
+
 		logger.debug("Initiated");
 	}
-	
-	@EventHandler(priority=EventPriority.NORMAL, ignoreCancelled=true)
+
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onInteract(PlayerInteractEvent event) {
-		
+
 		Block block = event.getClickedBlock();
 		Player player = event.getPlayer();
-		
-		if((block.getType().equals(Material.SIGN_POST) || block.getType().equals(Material.WALL_SIGN)) 
-				&& block.getWorld().getName().equals(this.plugin.getConfig().getString("worldname"))) {
-			
+
+		if ((block.getType().equals(Material.SIGN_POST) || block.getType().equals(Material.WALL_SIGN)) && block.getWorld().getName().equals(this.plugin.getConfig().getString("worldname"))) {
+
 			Sign sign = (Sign) block.getState();
-			
+
 			String firstline = sign.getLine(0).toLowerCase();
-			if(firstline.equals("[parkour]")) {
-				
+			if (firstline.equals("[parkour]")) {
+
 				int points = Integer.parseInt(sign.getLine(1));
-				
+
 				this.plugin.getDatabaseManager().updateDatabase(player.getName(), points);
-				
+
 				player.teleport(player.getWorld().getSpawnLocation());
-				
+
 				player.sendMessage(ChatColor.GREEN + "Grattis! Du fick " + ChatColor.LIGHT_PURPLE + points + ChatColor.GREEN + " poäng!");
-				
+
 				this.plugin.getSignManager().updateSigns();
 			}
-			else if(this.plugin.getSignManager().signnames.contains(firstline)) {
-				
-				if(this.plugin.getSignManager().addSign(firstline, block.getLocation()))
-					player.sendMessage(ChatColor.GREEN + "Skylten: " + firstline + " är nu registrerad!");
+			else if (this.plugin.getSignManager().signnames.contains(firstline)) {
+
+				if (this.plugin.getSignManager().addSign(firstline, block.getLocation())) player.sendMessage(ChatColor.GREEN + "Skylten: " + firstline + " är nu registrerad!");
 				else
 					player.sendMessage(ChatColor.RED + "Skylten: " + firstline + " kunde inte registreras!");
 			}

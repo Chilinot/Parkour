@@ -29,14 +29,16 @@ public class ConsoleLogger {
 	private static String template;
 	private static boolean debug;
 	private String name;
-	
+
 	private static Set<String> listeners = new HashSet<String>();
 
 	/**
 	 * Constructor for the ConsoleLogger.
 	 * 
-	 * @param instance - The JavaPlugin instance that initiated this logmanager.
-	 * @param debug - If set to true, it will output debug info to the console.
+	 * @param instance
+	 *            - The JavaPlugin instance that initiated this logmanager.
+	 * @param debug
+	 *            - If set to true, it will output debug info to the console.
 	 */
 	public ConsoleLogger(JavaPlugin instance, String loggerName) {
 		plugin = instance;
@@ -51,54 +53,57 @@ public class ConsoleLogger {
 	/**
 	 * Outputs normal info to the console with a green color.
 	 * 
-	 * @param msg - Info message
+	 * @param msg
+	 *            - Info message
 	 */
 	public void info(String msg) {
 		this.logger.info(Ansi.ansi().fg(Ansi.Color.GREEN) + ConsoleLogger.template + "[" + this.name + "] - " + msg + Ansi.ansi().fg(Ansi.Color.WHITE));
-		
+
 		broadcastToListeners("info", msg);
 	}
 
 	/**
 	 * Outputs warnings to the console with a yellow color.
 	 * 
-	 * @param msg - Warning message
+	 * @param msg
+	 *            - Warning message
 	 */
 	public void warning(String msg) {
 		this.logger.warning(Ansi.ansi().fg(Ansi.Color.YELLOW) + ConsoleLogger.template + "[" + this.name + "] - " + msg + Ansi.ansi().fg(Ansi.Color.WHITE));
-		
+
 		broadcastToListeners("warning", msg);
 	}
 
 	/**
 	 * Outputs severe messages to the console with a red color.
 	 * 
-	 * @param msg - Severe message
+	 * @param msg
+	 *            - Severe message
 	 */
 	public void severe(String msg) {
 		this.logger.severe(Ansi.ansi().fg(Ansi.Color.RED) + ConsoleLogger.template + "[" + this.name + "] - " + msg + Ansi.ansi().fg(Ansi.Color.WHITE));
-		
+
 		broadcastToListeners("severe", msg);
 	}
 
 	/**
-	 * This will only output if the debug is set to true.
-	 * Outputs with a cyan color.
+	 * This will only output if the debug is set to true. Outputs with a cyan
+	 * color.
 	 * 
-	 * @param msg - Debug message
+	 * @param msg
+	 *            - Debug message
 	 */
 	public void debug(String msg) {
-		if (debug == true)
-			this.logger.info(Ansi.ansi().fg(Ansi.Color.CYAN) + ConsoleLogger.template + "DEBUG [" + this.name + "] - " + msg + Ansi.ansi().fg(Ansi.Color.WHITE));
-		
+		if (debug == true) this.logger.info(Ansi.ansi().fg(Ansi.Color.CYAN) + ConsoleLogger.template + "DEBUG [" + this.name + "] - " + msg + Ansi.ansi().fg(Ansi.Color.WHITE));
+
 		broadcastToListeners("debug", msg);
 	}
-	
+
 	private void broadcastToListeners(String level, String msg) {
-		
+
 		String label = null;
-		
-		switch(level) {
+
+		switch (level) {
 			case "info":
 				label = ChatColor.GREEN + "INFO";
 				break;
@@ -114,11 +119,11 @@ public class ConsoleLogger {
 			default:
 				label = "Default label";
 		}
-		
-		for(String playername : listeners) {
+
+		for (String playername : listeners) {
 			Player player = plugin.getServer().getPlayer(playername);
-			
-			if(player != null) {
+
+			if (player != null) {
 				player.sendMessage(label + " [" + this.name + "] - " + ChatColor.WHITE + msg);
 			}
 			else {
@@ -126,36 +131,36 @@ public class ConsoleLogger {
 			}
 		}
 	}
-	
-	
-	
-	
+
 	// ---------- Static methods ----------
-	
+
 	/**
 	 * Set whether or not to output debug information to the console.
 	 * 
-	 * @param newstate - True to output, otherwise false.
+	 * @param newstate
+	 *            - True to output, otherwise false.
 	 */
 	public static void setDebug(boolean newstate) {
 		ConsoleLogger.debug = newstate;
 		plugin.getConfig().set("debug", newstate);
 		plugin.saveConfig();
 	}
-	
+
 	/**
 	 * Add a player to the list of players listening for debug info.
 	 * 
-	 * @param playername - Name of the player
+	 * @param playername
+	 *            - Name of the player
 	 */
 	public static void addListener(String playername) {
 		listeners.add(playername);
 	}
-	
+
 	/**
 	 * Remove a listening player from the list of listeners.
 	 * 
-	 * @param playername - Name of the player to remove
+	 * @param playername
+	 *            - Name of the player to remove
 	 */
 	public static void removeListener(String playername) {
 		listeners.remove(playername);

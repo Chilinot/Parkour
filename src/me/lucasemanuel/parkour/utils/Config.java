@@ -7,9 +7,10 @@ import org.bukkit.plugin.Plugin;
 
 public class Config {
 
-	/* -------------------------------- *
-	 *       Settings in config         *
-	 * -------------------------------- */
+	/*
+	 * -------------------------------- * Settings in config *
+	 * --------------------------------
+	 */
 	public static boolean debug = false;
 	public static String worldname = "fun";
 	public static String host = "localhost";
@@ -19,9 +20,10 @@ public class Config {
 	public static String username = "username";
 	public static String password = "password";
 
-	/* -------------------------------- *
-	 *          Do not touch!           *
-	 * -------------------------------- */
+	/*
+	 * -------------------------------- * Do not touch! *
+	 * --------------------------------
+	 */
 	public static void load(Plugin plugin) {
 		FileConfiguration conf = plugin.getConfig();
 		for (Field field : Config.class.getDeclaredFields()) {
@@ -30,10 +32,12 @@ public class Config {
 				try {
 					if (conf.isSet(path)) {
 						field.set(null, conf.get(path));
-					} else {
+					}
+					else {
 						conf.set(path, field.get(null));
 					}
-				} catch (IllegalAccessException ex) {
+				}
+				catch (IllegalAccessException ex) {
 					//
 				}
 			}
