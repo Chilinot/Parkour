@@ -1,3 +1,4 @@
-name: Parkour
-main: me.lucasemanuel.parkour.Main
-version: 2.2
+name: ${project.name}
+author: LucasEmanuel
+version: ${project.version}
+main: ${project.groupId}.${project.artifactId}.Main
