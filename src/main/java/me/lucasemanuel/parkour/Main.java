@@ -22,16 +22,33 @@ import se.lucasarnstrom.lucasutils.ConsoleLogger;
 public class Main extends JavaPlugin {
 	
 	private ConsoleLogger logger;
+	
+	private MySQLInterface mysql;
 
 	public void onEnable() {
 		Config.load(this);
 		ConsoleLogger.init(this);
 		
 		this.logger = new ConsoleLogger("Main");
+		
+		logger.debug("Initiating MySQL-driver");
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		logger.debug("Initiating managers...");
+		this.mysql = new MySQLInterface(this);
 
 		logger.debug("Registering eventlisteners...");
 		this.getServer().getPluginManager().registerEvents(new ParkourListener(this), this);
 		
 		logger.debug("Plugin is initiated!");
+	}
+	
+	public MySQLInterface getMySQLInterface() {
+		return mysql;
 	}
 }

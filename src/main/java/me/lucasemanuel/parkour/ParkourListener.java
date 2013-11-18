@@ -15,6 +15,7 @@
 
 package me.lucasemanuel.parkour;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -51,6 +52,18 @@ public class ParkourListener implements Listener {
 			
 			if(sign.getLine(0).equalsIgnoreCase("[parkour]")) {
 				
+				int points = 0;
+				try {
+					points = Integer.parseInt(sign.getLine(1));
+				}
+				catch(NumberFormatException e) {
+					logger.severe("Error while trying to get amount of points from sign! Line 1 = \"" + sign.getLine(1) + "\"");
+					e.printStackTrace();
+					return;
+				}
+				
+				player.sendMessage("Grattis! Du har fick " + ChatColor.GOLD + points + ChatColor.WHITE + " poäng!");
+				plugin.getMySQLInterface().updateDatabase(player.getName(), points);
 			}
 		}
 	}

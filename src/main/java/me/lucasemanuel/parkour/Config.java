@@ -13,6 +13,14 @@ public class Config {
 		HashMap<String, Object> defaults = new HashMap<String, Object>() {{
 			put("debug", false);
 			put("worldname", "world");
+			
+			// Database
+			put("database.host",      "localhost");
+			put("database.port",      3306);
+			put("database.database",  "parkour");
+			put("database.tablename", "stats");
+			put("database.username",  "username");
+			put("database.password",  "password");
 		}};
 		
 		
