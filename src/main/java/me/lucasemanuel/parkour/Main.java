@@ -15,29 +15,23 @@
 
 package me.lucasemanuel.parkour;
 
-import me.lucasemanuel.parkour.utils.Config;
-
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Main extends JavaPlugin {
+import se.lucasarnstrom.lucasutils.ConsoleLogger;
 
-	private DatabaseManager databasemanager;
-	//private SignManager signmanager;
+public class Main extends JavaPlugin {
+	
+	private ConsoleLogger logger;
 
 	public void onEnable() {
 		Config.load(this);
+		ConsoleLogger.init(this);
+		
+		this.logger = new ConsoleLogger("Main");
 
+		logger.debug("Registering eventlisteners...");
 		this.getServer().getPluginManager().registerEvents(new ParkourListener(this), this);
-
-		this.databasemanager = new DatabaseManager(this);
-		//this.signmanager = new SignManager(this);
+		
+		logger.debug("Plugin is initiated!");
 	}
-
-	public DatabaseManager getDatabaseManager() {
-		return this.databasemanager;
-	}
-
-//	public SignManager getSignManager() {
-//		return this.signmanager;
-//	}
 }
