@@ -74,6 +74,9 @@ public class ParkourListener implements Listener {
 				
 				// Points
 				plugin.getMySQLInterface().updateDatabase(player.getName(), points);
+				
+				// Back to spawn
+				player.teleport(player.getWorld().getSpawnLocation());
 			}
 		}
 	}
