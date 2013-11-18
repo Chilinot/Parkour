@@ -65,7 +65,7 @@ public class ParkourListener implements Listener {
 					return;
 				}
 				
-				player.sendMessage("Grattis! Du har fick " + ChatColor.GOLD + points 
+				player.sendMessage("Grattis! Du har fått " + ChatColor.GOLD + points 
 						+ ChatColor.WHITE + " poäng och " + ChatColor.GOLD + tickets + ChatColor.WHITE + " stycken biljetter!");
 				
 				// Tickets
