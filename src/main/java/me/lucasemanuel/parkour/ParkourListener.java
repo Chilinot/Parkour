@@ -24,6 +24,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 import se.lucasarnstrom.lucasutils.ConsoleLogger;
 
@@ -52,9 +53,11 @@ public class ParkourListener implements Listener {
 			
 			if(sign.getLine(0).equalsIgnoreCase("[parkour]")) {
 				
-				int points = 0;
+				int points  = 0;
+				int tickets = 0;
 				try {
 					points = Integer.parseInt(sign.getLine(1));
+					tickets = Integer.parseInt(sign.getLine(2));
 				}
 				catch(NumberFormatException e) {
 					logger.severe("Error while trying to get amount of points from sign! Line 1 = \"" + sign.getLine(1) + "\"");
@@ -62,7 +65,14 @@ public class ParkourListener implements Listener {
 					return;
 				}
 				
-				player.sendMessage("Grattis! Du har fick " + ChatColor.GOLD + points + ChatColor.WHITE + " poäng!");
+				player.sendMessage("Grattis! Du har fick " + ChatColor.GOLD + points 
+						+ ChatColor.WHITE + " poäng och " + ChatColor.GOLD + tickets + ChatColor.WHITE + " stycken biljetter!");
+				
+				// Tickets
+				player.getInventory().addItem(new ItemStack(Material.GOLD_NUGGET, tickets));
+				player.updateInventory();
+				
+				// Points
 				plugin.getMySQLInterface().updateDatabase(player.getName(), points);
 			}
 		}
