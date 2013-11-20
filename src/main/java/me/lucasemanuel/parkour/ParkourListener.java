@@ -51,7 +51,7 @@ public class ParkourListener implements Listener {
 			
 			Sign sign = (Sign) block.getState();
 			
-			if(sign.getLine(0).equalsIgnoreCase("[parkour]")) {
+			if(sign.getLine(0).equalsIgnoreCase(plugin.getConfig().getString("sign"))) {
 				
 				int points  = 0;
 				int tickets = 0;
