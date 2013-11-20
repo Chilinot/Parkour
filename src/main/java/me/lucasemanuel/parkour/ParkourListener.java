@@ -69,8 +69,10 @@ public class ParkourListener implements Listener {
 						+ ChatColor.WHITE + " poäng och " + ChatColor.GOLD + tickets + ChatColor.WHITE + " stycken biljetter!");
 				
 				// Tickets
-				player.getInventory().addItem(new ItemStack(Material.GOLD_NUGGET, tickets));
-				player.updateInventory();
+				if(tickets > 0) {
+					player.getInventory().addItem(new ItemStack(Material.GOLD_NUGGET, tickets));
+					player.updateInventory();
+				}
 				
 				// Points
 				plugin.getMySQLInterface().updateDatabase(player.getName(), points);
