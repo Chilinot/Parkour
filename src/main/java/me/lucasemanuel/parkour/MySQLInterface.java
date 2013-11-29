@@ -14,7 +14,6 @@ public class MySQLInterface {
 	private ConsoleLogger logger;
 	
 	private final String URL;
-	private final String TABLENAME;
 	private final String USERNAME;
 	private final String PASSWORD;
 
@@ -27,16 +26,15 @@ public class MySQLInterface {
 				":" + config.getInt("database.port") + 
 				"/" + config.getString("database.database");
 		
-		this.TABLENAME = config.getString("database.tablename");
 		this.USERNAME  = config.getString("database.username");
 		this.PASSWORD  = config.getString("database.password");
 		
 		logger.debug("Initiated");
 	}
 	
-	public void updateDatabase(String playername, int points) {
+	public void updateDatabase(String playername, int points, String table) {
 		logger.debug("Updating stats for player=\"" + playername + "\" points=" + points);
-		new UpdateDatabaseThread(URL, TABLENAME, USERNAME, PASSWORD, playername, points);
+		new UpdateDatabaseThread(URL, table, USERNAME, PASSWORD, playername, points);
 	}
 	
 	private class UpdateDatabaseThread extends Thread {

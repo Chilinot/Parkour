@@ -1,5 +1,6 @@
 package me.lucasemanuel.parkour;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -12,16 +13,20 @@ public class Config {
 		@SuppressWarnings("serial")
 		HashMap<String, Object> defaults = new HashMap<String, Object>() {{
 			put("debug", false);
-			put("worldname", "world");
 			
-			put("sign.parkour", "[parkour]");
-			put("sign.pussel",  "[pussel]");
+			put("worldnames", new ArrayList<String>(){{
+				add("world");
+			}});
+			
+			put("signs",      new ArrayList<String>(){{
+				add("[parkour]");
+				add("[pussel]");
+			}});
 			
 			// Database
 			put("database.host",      "localhost");
 			put("database.port",      3306);
 			put("database.database",  "parkour");
-			put("database.tablename", "stats");
 			put("database.username",  "username");
 			put("database.password",  "password");
 		}};

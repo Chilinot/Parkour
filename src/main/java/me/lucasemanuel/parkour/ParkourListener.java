@@ -40,6 +40,7 @@ public class ParkourListener implements Listener {
 		logger.debug("Intitated");
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onInteract(PlayerInteractEvent event) {
 
@@ -47,16 +48,17 @@ public class ParkourListener implements Listener {
 		Player player = event.getPlayer();
 
 		if((block.getType() == Material.WALL_SIGN || block.getType() == Material.SIGN_POST)
-				&& block.getWorld().getName().equals(this.plugin.getConfig().getString("worldname"))) {
+				&& plugin.getConfig().getStringList("worldnames").contains(block.getWorld().getName())) {
 			
 			Sign sign = (Sign) block.getState();
 			
-			if(sign.getLine(0).equalsIgnoreCase(plugin.getConfig().getString("sign"))) {
+			String line_0 = sign.getLine(0);
+			if(plugin.getConfig().getStringList("signs").contains(line_0)) {
 				
 				int points  = 0;
 				int tickets = 0;
 				try {
-					points = Integer.parseInt(sign.getLine(1));
+					points  = Integer.parseInt(sign.getLine(1));
 					tickets = Integer.parseInt(sign.getLine(2));
 				}
 				catch(NumberFormatException e) {
@@ -75,7 +77,7 @@ public class ParkourListener implements Listener {
 				}
 				
 				// Points
-				plugin.getMySQLInterface().updateDatabase(player.getName(), points);
+				plugin.getMySQLInterface().updateDatabase(player.getName(), points, line_0.toLowerCase().replace("[", "").replace("]", ""));
 				
 				// Back to spawn
 				player.teleport(player.getWorld().getSpawnLocation());
