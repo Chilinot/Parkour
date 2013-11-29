@@ -13,7 +13,9 @@ public class Config {
 		HashMap<String, Object> defaults = new HashMap<String, Object>() {{
 			put("debug", false);
 			put("worldname", "world");
-			put("sign", "[parkour]");
+			
+			put("sign.parkour", "[parkour]");
+			put("sign.pussel",  "[pussel]");
 			
 			// Database
 			put("database.host",      "localhost");
